@@ -1,7 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-import { func } from 'prop-types';
 
 function Square(props) {
   return (
@@ -214,7 +213,14 @@ function boardWin(board) {
       return board[a];
     }
   }
-  return null;
+
+  //" " is used to indicate a draw
+  if (board.some(i => i === null)){
+    return null;
+  } else {
+    return " ";
+  }
+
 }
 
 function initBoards() {
