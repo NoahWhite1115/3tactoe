@@ -10,6 +10,19 @@ function Square(props) {
   );
 }
 
+function Overlay(props) {
+  if (props.overlay){
+    return (
+      <div>
+        <div className="overlay"></div>
+        <div className="text">{props.overlay}</div>
+      </div>
+    );
+  } else {
+    return null;
+  }
+}
+
 class Board extends React.Component {
   renderSquare(i,j) {
     return (
@@ -20,9 +33,18 @@ class Board extends React.Component {
     );
   }
 
+  renderOverlay() {
+    return (
+      <Overlay
+        overlay={this.props.overlay}
+      />
+    );
+  }
+
   render() {
     return (
       <div className={this.props.className}>
+        {this.renderOverlay()}
         <div className="board-row">
 	        {this.renderSquare(this.props.boardID, 0)}
           {this.renderSquare(this.props.boardID, 1)}
@@ -45,25 +67,17 @@ class Board extends React.Component {
 
 class SuperBoard extends React.Component{
   renderBoard(i) {
-    if (this.props.wonBoards[i]){
-      return(
-        <Board
-        className = {this.props.lastPlayed == i ? "selected" : "board"}
+    var className = "board";
+    className = this.props.lastPlayed == i ? className + " selected" : className;
+    return (
+      <Board
+        className = {className}
         boardID = {i}
         squares={this.props.boards[i]}
         onClick={this.props.onClick}
-        />
-      )
-    } else {
-      return (
-        <Board
-          className = {this.props.lastPlayed == i ? "selected" : "board"}
-          boardID = {i}
-          squares={this.props.boards[i]}
-          onClick={this.props.onClick}
-        />
-      )
-    }
+        overlay = {this.props.wonBoards[i]}
+      />
+    )
   }
 
   render() {
