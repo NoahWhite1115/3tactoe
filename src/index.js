@@ -10,6 +10,16 @@ function Square(props) {
   );
 }
 
+function Overlay(props) {
+  if (props.overlay){
+    return (
+      <div className="overlay"></div>
+    );
+  } else {
+    return null;
+  }
+}
+
 class Board extends React.Component {
   renderSquare(i,j) {
     return (
@@ -20,10 +30,18 @@ class Board extends React.Component {
     );
   }
 
+  renderOverlay() {
+    return (
+      <Overlay
+        overlay={this.props.overlay}
+      />
+    );
+  }
+
   render() {
     return (
       <div className={this.props.className}>
-        <div className="overlay"></div>
+        {this.renderOverlay()}
         <div className="board-row">
 	        {this.renderSquare(this.props.boardID, 0)}
           {this.renderSquare(this.props.boardID, 1)}
