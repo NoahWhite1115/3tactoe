@@ -13,7 +13,10 @@ function Square(props) {
 function Overlay(props) {
   if (props.overlay){
     return (
-      <div className="overlay"></div>
+      <div>
+        <div className="overlay"></div>
+        <div className="text">{props.overlay}</div>
+      </div>
     );
   } else {
     return null;
