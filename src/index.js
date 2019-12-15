@@ -68,7 +68,7 @@ class Board extends React.Component {
 class SuperBoard extends React.Component{
   renderBoard(i) {
     var className = "board";
-    className = this.props.lastPlayed == i ? className + " selected" : className;
+    className = this.props.lastPlayed === i ? className + " selected" : className;
     return (
       <Board
         className = {className}
@@ -115,7 +115,6 @@ class Game extends React.Component {
         }
       ],
       stepNumber: 0,
-      //starts at -1 because you can play anywhere on turn 1
       xIsNext: true
     };
   }
@@ -123,7 +122,7 @@ class Game extends React.Component {
   handleClick(i,j) {
     const history = this.state.history.slice(0, this.state.stepNumber + 1);
     const current = history[history.length - 1];
-    const boards = current.boards.slice();
+    const boards = current.boards.map(arr => arr.slice());
     const lastPlayed = current.lastPlayed;
 
     const rightBoard = (i !== lastPlayed && lastPlayed !== -1);
@@ -148,19 +147,19 @@ class Game extends React.Component {
       xIsNext: !this.state.xIsNext
     });
   }
-/*
+
   jumpTo(step) {
     this.setState({
       stepNumber: step,
       xIsNext: (step % 2) === 0
     });
   }
-*/
+
   render() {
     const history = this.state.history;
     const current = history[this.state.stepNumber];
     const winner = boardWin(current.wonBoards);
-    /*
+
     const moves = history.map((step, move) => {
       const desc = move ?
         'Go to move #' + move :
@@ -171,7 +170,7 @@ class Game extends React.Component {
         </li>
       );
     });
-    */
+    
     let status;
     if (winner) {
       status = "Winner: " + winner;
@@ -191,7 +190,7 @@ class Game extends React.Component {
         </div>
         <div className="game-info">
           <div>{status}</div>
-          <ol>{}</ol>
+          <ol>{moves}</ol>
         </div>
       </div>
     );
